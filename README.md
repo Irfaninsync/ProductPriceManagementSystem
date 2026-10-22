@@ -36,7 +36,7 @@
 3. [System Architecture & Layered Design](#3-system-architecture--layered-design)
 4. [Project Directory Layout](#4-project-directory-layout)
 5. [How the System Works (Under the Hood)](#5-how-the-system-works-under-the-hood)
-6. [How to Compile and Run](#6-how-to-compile-and-run)
+6. [How to Clone, Compile, and Run (Git Quickstart)](#6-how-to-clone-compile-and-run-git-quickstart)
 7. [Comprehensive User Guide (How to Use PPMS)](#7-comprehensive-user-guide-how-to-use-ppms)
 8. [CSV Data Schemas & Crash-Resilient Persistence](#8-csv-data-schemas--crash-resilient-persistence)
 9. [Financial & Analytical Calculation Rules](#9-financial--analytical-calculation-rules)
@@ -252,64 +252,86 @@ Prices cannot be overwritten arbitrarily. The pricing workflow enforces strict c
 
 ---
 
-## 6. How to Compile and Run
+## 6. How to Clone, Compile, and Run (Git Quickstart)
 
-### 6.1 Prerequisites
-- **Java Development Kit (JDK)**: Version 17 or higher.
-- Verify installation:
-  ```bash
-  java -version
-  javac -version
-  ```
+> **Can I use this project by `git clone`ing it in my terminal or PowerShell?**  
+> **Yes, absolutely!** PPMS is designed with **zero third-party dependencies**. It requires no external database setup (no MySQL/PostgreSQL), no build tools (no Maven or Gradle required), and no Docker containers. Anyone with standard Java (JDK 17+) installed can clone the repository and launch the application in less than 30 seconds.
 
 ---
 
-### 6.2 Windows (Command Prompt)
+### 6.1 Step-by-Step Quickstart via Git Clone
+
+#### Step 1: Open Terminal or PowerShell
+- **Windows**: Press `Win + X` and select **Terminal** or **PowerShell** (or search for `cmd` or `PowerShell`).
+- **macOS / Linux**: Open your system **Terminal**.
+
+#### Step 2: Clone the GitHub Repository
+Run the standard `git clone` command to download the complete repository onto your machine:
+```bash
+git clone https://github.com/Irfaninsync/ProductPriceManagementSystem.git
+```
+
+#### Step 3: Change Directory into the Cloned Project
+```bash
+cd ProductPriceManagementSystem
+```
+
+#### Step 4: Verify Java Development Kit (JDK 17+)
+Ensure Java 17 or higher is installed and registered in your system environment path:
+```bash
+java -version
+javac -version
+```
+*(If you do not have Java 17+ installed, you can download OpenJDK freely from [https://adoptium.net/](https://adoptium.net/)).*
+
+---
+
+### 6.2 Running the Application by Operating System
+
+#### Method 1: Windows PowerShell
+Once inside the cloned folder, run:
+```powershell
+# 1. Compile all Core Java classes into bin/
+./build.ps1
+
+# 2. Run the automated test suite (verifies 6/6 test suites pass)
+java -cp bin com.ppms.TestRunner
+
+# 3. Launch the interactive application
+./run.ps1
+```
+*(Note: If PowerShell displays an execution policy notice, you can run `Set-ExecutionPolicy -Scope Process -ExecutionPolicy Bypass`, or simply run via Command Prompt or Direct Java CLI below).*
+
+#### Method 2: Windows Command Prompt (`cmd.exe`)
+Double-click the batch files or execute them in `cmd`:
 ```cmd
-:: 1. Compile all Core Java source code
+:: 1. Compile all Core Java source files into bin/
 compile.bat
 
-:: 2. Run the automated test suite (all 6 suites)
+:: 2. Execute automated test suite
 test.bat
 
-:: 3. Launch the PPMS interactive console application
+:: 3. Launch the PPMS interactive console interface
 run.bat
 ```
 
----
-
-### 6.3 Windows (PowerShell)
-```powershell
-# 1. Compile the application
-./build.ps1
-
-# 2. Run the automated test suite
-java -cp bin com.ppms.TestRunner
-
-# 3. Launch the application
-./run.ps1
-```
-
----
-
-### 6.4 Linux / macOS (Bash)
+#### Method 3: Linux / macOS (Bash / Zsh)
 ```bash
-# 1. Make scripts executable
+# 1. Grant execution permissions to shell scripts
 chmod +x compile.sh run.sh
 
-# 2. Compile all source code
+# 2. Compile all source code into bin/
 ./compile.sh
 
-# 3. Run automated tests
+# 3. Run automated test suite
 java -cp bin com.ppms.TestRunner
 
 # 4. Launch the application
 ./run.sh
 ```
 
----
-
-### 6.5 Direct Java CLI Commands (Universal)
+#### Method 4: Universal Direct Java CLI (Works Everywhere)
+If you prefer not using any shell script, standard Java commands work across any operating system:
 ```bash
 # Compile everything directly into bin/
 javac -d bin -encoding UTF-8 src/main/java/com/ppms/*/*.java src/test/java/com/ppms/*.java

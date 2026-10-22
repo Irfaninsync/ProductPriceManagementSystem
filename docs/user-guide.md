@@ -4,7 +4,14 @@
 
 ## 1. Getting Started
 
-### 1.1 Prerequisites
+### 1.1 Prerequisites & Git Clone
+To clone and get started immediately:
+```bash
+git clone https://github.com/Irfaninsync/ProductPriceManagementSystem.git
+cd ProductPriceManagementSystem
+```
+
+### 1.2 System Requirements
 - Java Development Kit (JDK) 17 or higher.
 - Standard terminal (Windows Command Prompt, Windows PowerShell, Terminal on macOS/Linux).
 
