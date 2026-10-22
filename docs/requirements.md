@@ -1,3 +1,5 @@
+> **GitHub Repository:** [https://github.com/Irfaninsync/ProductPriceManagementSystem](https://github.com/Irfaninsync/ProductPriceManagementSystem)
+
 # Functional & Non-Functional Requirements — PPMS
 
 ## 1. Functional Requirements Matrix
@@ -46,3 +48,7 @@
 - Pure Core Java SE 17 standard library.
 - Zero external build tool or framework dependencies (no Maven/Gradle required, standard `javac` compilable).
 - Compatible with Windows, Linux, and macOS.
+
+
+---
+**GitHub Repository:** [https://github.com/Irfaninsync/ProductPriceManagementSystem](https://github.com/Irfaninsync/ProductPriceManagementSystem)

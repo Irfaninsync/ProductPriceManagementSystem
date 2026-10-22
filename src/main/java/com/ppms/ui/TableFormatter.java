@@ -1,3 +1,4 @@
+// GitHub Repository: https://github.com/Irfaninsync/ProductPriceManagementSystem
 package com.ppms.ui;
 
 import java.util.ArrayList;
@@ -63,18 +64,18 @@ public class TableFormatter {
 
         StringBuilder sb = new StringBuilder();
 
-        // Border characters
-        char hLine = useBoxDrawing ? '─' : '-';
-        char vLine = useBoxDrawing ? '│' : '|';
-        char cross = useBoxDrawing ? '┼' : '+';
-        char tDown = useBoxDrawing ? '┬' : '+';
-        char tUp   = useBoxDrawing ? '┴' : '+';
-        char topLeft = useBoxDrawing ? '┌' : '+';
-        char topRight = useBoxDrawing ? '┐' : '+';
-        char bottomLeft = useBoxDrawing ? '└' : '+';
-        char bottomRight = useBoxDrawing ? '┘' : '+';
-        char leftCross = useBoxDrawing ? '├' : '+';
-        char rightCross = useBoxDrawing ? '┤' : '+';
+        // Border characters with explicit Unicode escape sequences
+        char hLine = useBoxDrawing ? '\u2500' : '-';
+        char vLine = useBoxDrawing ? '\u2502' : '|';
+        char cross = useBoxDrawing ? '\u253C' : '+';
+        char tDown = useBoxDrawing ? '\u252C' : '+';
+        char tUp   = useBoxDrawing ? '\u2534' : '+';
+        char topLeft = useBoxDrawing ? '\u250C' : '+';
+        char topRight = useBoxDrawing ? '\u2510' : '+';
+        char bottomLeft = useBoxDrawing ? '\u2514' : '+';
+        char bottomRight = useBoxDrawing ? '\u2518' : '+';
+        char leftCross = useBoxDrawing ? '\u251C' : '+';
+        char rightCross = useBoxDrawing ? '\u2524' : '+';
 
         // Top Border
         sb.append(topLeft);
@@ -146,8 +147,9 @@ public class TableFormatter {
 
     private static String padLeftRight(String s, int width) {
         if (s.length() >= width) return s;
-        // 1 leading space, then content, then remaining spaces
         int right = width - s.length() - 1;
         return " " + s + repeat(' ', Math.max(0, right));
     }
 }
+
+// End of file — GitHub Repository: https://github.com/Irfaninsync/ProductPriceManagementSystem

@@ -1,3 +1,4 @@
+// GitHub Repository: https://github.com/Irfaninsync/ProductPriceManagementSystem
 package com.ppms.model;
 
 import java.math.BigDecimal;
@@ -280,3 +281,5 @@ public class Product implements Comparable<Product> {
                 '}';
     }
 }
+// End of file — GitHub Repository: https://github.com/Irfaninsync/ProductPriceManagementSystem
+

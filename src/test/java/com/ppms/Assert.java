@@ -1,3 +1,4 @@
+// GitHub Repository: https://github.com/Irfaninsync/ProductPriceManagementSystem
 package com.ppms;
 
 import java.util.Objects;
@@ -49,3 +50,5 @@ public class Assert {
         void execute() throws Throwable;
     }
 }
+// End of file — GitHub Repository: https://github.com/Irfaninsync/ProductPriceManagementSystem
+

@@ -1,3 +1,4 @@
+@REM GitHub Repository: https://github.com/Irfaninsync/ProductPriceManagementSystem
 @echo off
 echo =====================================================================
 echo  Compiling Product Price Management System (PPMS)
@@ -12,3 +13,4 @@ if %ERRORLEVEL% EQU 0 (
 ) else (
     echo [ERROR] Compilation failed.
 )
+@REM End of script - GitHub Repository: https://github.com/Irfaninsync/ProductPriceManagementSystem

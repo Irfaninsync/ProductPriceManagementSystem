@@ -1,3 +1,4 @@
+// GitHub Repository: https://github.com/Irfaninsync/ProductPriceManagementSystem
 package com.ppms.validation;
 
 import com.ppms.model.Product;
@@ -127,3 +128,5 @@ public class ProductValidator {
         return result;
     }
 }
+// End of file — GitHub Repository: https://github.com/Irfaninsync/ProductPriceManagementSystem
+

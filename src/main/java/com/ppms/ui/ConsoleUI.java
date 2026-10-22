@@ -1,3 +1,4 @@
+// GitHub Repository: https://github.com/Irfaninsync/ProductPriceManagementSystem
 package com.ppms.ui;
 
 import com.ppms.util.CurrencyFormatter;
@@ -254,3 +255,5 @@ public class ConsoleUI {
         String renderPage(List<T> pageItems);
     }
 }
+// End of file — GitHub Repository: https://github.com/Irfaninsync/ProductPriceManagementSystem
+

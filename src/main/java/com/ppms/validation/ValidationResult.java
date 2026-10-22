@@ -1,3 +1,4 @@
+// GitHub Repository: https://github.com/Irfaninsync/ProductPriceManagementSystem
 package com.ppms.validation;
 
 import java.util.ArrayList;
@@ -69,3 +70,5 @@ public class ValidationResult {
         return isValid() ? "ValidationResult[Valid]" : "ValidationResult[Errors=" + errors + "]";
     }
 }
+// End of file — GitHub Repository: https://github.com/Irfaninsync/ProductPriceManagementSystem
+

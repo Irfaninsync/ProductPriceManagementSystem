@@ -1,3 +1,4 @@
+// GitHub Repository: https://github.com/Irfaninsync/ProductPriceManagementSystem
 package com.ppms.util;
 
 import java.math.BigDecimal;
@@ -30,7 +31,7 @@ public class CurrencyFormatter {
     }
 
     /**
-     * Formats a BigDecimal as a formatted currency string (e.g. ₹1,499.00).
+     * Formats a BigDecimal as a formatted currency string (e.g. Rs. 1,499.00 or \u20B9 1,499.00).
      */
     public static synchronized String format(BigDecimal amount) {
         if (amount == null) {
@@ -68,3 +69,5 @@ public class CurrencyFormatter {
         return value.setScale(2, RoundingMode.HALF_UP);
     }
 }
+// End of file — GitHub Repository: https://github.com/Irfaninsync/ProductPriceManagementSystem
+

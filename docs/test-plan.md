@@ -1,3 +1,5 @@
+> **GitHub Repository:** [https://github.com/Irfaninsync/ProductPriceManagementSystem](https://github.com/Irfaninsync/ProductPriceManagementSystem)
+
 # Test Plan and Verification Report — PPMS
 
 ## 1. Test Strategy Overview
@@ -70,3 +72,7 @@ The testing methodology consists of:
 - Simulates complete system shutdown.
 - Re-launches system reading sandbox CSV files.
 - Confirms product and audit history survived restart completely intact.
+
+
+---
+**GitHub Repository:** [https://github.com/Irfaninsync/ProductPriceManagementSystem](https://github.com/Irfaninsync/ProductPriceManagementSystem)

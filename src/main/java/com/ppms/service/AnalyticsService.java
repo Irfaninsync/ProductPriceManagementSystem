@@ -1,3 +1,4 @@
+// GitHub Repository: https://github.com/Irfaninsync/ProductPriceManagementSystem
 package com.ppms.service;
 
 import com.ppms.model.AnalyticsSummary;
@@ -143,3 +144,5 @@ public class AnalyticsService {
                 .collect(Collectors.toList());
     }
 }
+// End of file — GitHub Repository: https://github.com/Irfaninsync/ProductPriceManagementSystem
+

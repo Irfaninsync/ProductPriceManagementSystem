@@ -1,3 +1,4 @@
+// GitHub Repository: https://github.com/Irfaninsync/ProductPriceManagementSystem
 package com.ppms;
 
 import com.ppms.model.PriceHistory;
@@ -195,3 +196,5 @@ public class PricingTest {
         Assert.assertTrue(hZero.getPercentageChange().isEmpty(), "Percentage change should be empty Optional when old price is 0");
     }
 }
+// End of file — GitHub Repository: https://github.com/Irfaninsync/ProductPriceManagementSystem
+

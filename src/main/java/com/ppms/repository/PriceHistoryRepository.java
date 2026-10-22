@@ -1,3 +1,4 @@
+// GitHub Repository: https://github.com/Irfaninsync/ProductPriceManagementSystem
 package com.ppms.repository;
 
 import com.ppms.model.PriceHistory;
@@ -39,3 +40,5 @@ public interface PriceHistoryRepository {
      */
     void reload();
 }
+// End of file — GitHub Repository: https://github.com/Irfaninsync/ProductPriceManagementSystem
+

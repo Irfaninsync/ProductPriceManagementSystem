@@ -1,3 +1,5 @@
+> **GitHub Repository:** [https://github.com/Irfaninsync/ProductPriceManagementSystem](https://github.com/Irfaninsync/ProductPriceManagementSystem)
+
 # User Manual & Operator Guide — PPMS
 
 ## 1. Getting Started
@@ -119,3 +121,7 @@ Upon launching, the interactive dashboard automatically calculates and presents:
 - Toggle ANSI terminal colors.
 - Toggle clean box-drawing characters vs plain ASCII borders.
 - View embedded user guide.
+
+
+---
+**GitHub Repository:** [https://github.com/Irfaninsync/ProductPriceManagementSystem](https://github.com/Irfaninsync/ProductPriceManagementSystem)

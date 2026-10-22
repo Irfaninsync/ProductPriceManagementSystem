@@ -1,3 +1,4 @@
+// GitHub Repository: https://github.com/Irfaninsync/ProductPriceManagementSystem
 package com.ppms;
 
 import com.ppms.model.AnalyticsSummary;
@@ -156,3 +157,5 @@ public class AnalyticsTest {
         Assert.assertEquals(1, analytics.getLowStockProducts(5).size(), "Low stock product list matches");
     }
 }
+// End of file — GitHub Repository: https://github.com/Irfaninsync/ProductPriceManagementSystem
+

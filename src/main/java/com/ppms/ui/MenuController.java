@@ -1,3 +1,4 @@
+// GitHub Repository: https://github.com/Irfaninsync/ProductPriceManagementSystem
 package com.ppms.ui;
 
 import com.ppms.model.AnalyticsSummary;
@@ -61,7 +62,7 @@ public class MenuController {
 
         if (metadataHandler != null) {
             this.lowStockThreshold = metadataHandler.getInt("low_stock_threshold", 10);
-            String savedCurrency = metadataHandler.get("currency_symbol", "₹");
+            String savedCurrency = metadataHandler.get("currency_symbol", "\u20B9");
             CurrencyFormatter.setCurrencySymbol(savedCurrency);
         }
     }
@@ -985,7 +986,7 @@ public class MenuController {
                     ui.pause();
                     break;
                 case 2:
-                    String sym = ui.readString("Enter currency symbol (e.g. ₹, $, EUR)", false);
+                    String sym = ui.readString("Enter currency symbol (e.g. Rs., $, EUR, \u20B9)", false);
                     CurrencyFormatter.setCurrencySymbol(sym);
                     if (metadataHandler != null) {
                         metadataHandler.set("currency_symbol", sym);
@@ -1085,3 +1086,5 @@ public class MenuController {
         });
     }
 }
+// End of file — GitHub Repository: https://github.com/Irfaninsync/ProductPriceManagementSystem
+

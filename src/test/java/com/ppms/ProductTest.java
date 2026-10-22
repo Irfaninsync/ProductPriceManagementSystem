@@ -1,3 +1,4 @@
+// GitHub Repository: https://github.com/Irfaninsync/ProductPriceManagementSystem
 package com.ppms;
 
 import com.ppms.model.Product;
@@ -179,3 +180,5 @@ public class ProductTest {
         Assert.assertEquals("PRD-1009", filtered.get(0).getProductId(), "Match filtered product");
     }
 }
+// End of file — GitHub Repository: https://github.com/Irfaninsync/ProductPriceManagementSystem
+

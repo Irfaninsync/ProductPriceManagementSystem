@@ -1,3 +1,5 @@
+> **GitHub Repository:** [https://github.com/Irfaninsync/ProductPriceManagementSystem](https://github.com/Irfaninsync/ProductPriceManagementSystem)
+
 # UML Class Diagram — Product Price Management System (PPMS)
 
 ```mermaid
@@ -162,3 +164,7 @@ classDiagram
     PricingService ..> PriceProposal
     AnalyticsService ..> AnalyticsSummary
 ```
+
+
+---
+**GitHub Repository:** [https://github.com/Irfaninsync/ProductPriceManagementSystem](https://github.com/Irfaninsync/ProductPriceManagementSystem)

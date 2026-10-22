@@ -1,3 +1,4 @@
+// GitHub Repository: https://github.com/Irfaninsync/ProductPriceManagementSystem
 package com.ppms.app;
 
 import com.ppms.model.Product;
@@ -147,3 +148,5 @@ public class Application {
         historyRepo.save(h3);
     }
 }
+// End of file — GitHub Repository: https://github.com/Irfaninsync/ProductPriceManagementSystem
+

@@ -1,3 +1,5 @@
+> **GitHub Repository:** [https://github.com/Irfaninsync/ProductPriceManagementSystem](https://github.com/Irfaninsync/ProductPriceManagementSystem)
+
 # PROJECT REPORT
 
 # PRODUCT PRICE MANAGEMENT SYSTEM (PPMS)
@@ -449,3 +451,7 @@ The Product Price Management System successfully fulfills all functional, archit
 
 ### Q6: How does the repository pattern benefit this project?
 **Answer**: The repository pattern decouples high-level business services (`ProductService`, `PricingService`) from low-level storage details (`CsvProductRepository`). If storage needs to change to a database or JSON in the future, services remain completely untouched.
+
+
+---
+**GitHub Repository:** [https://github.com/Irfaninsync/ProductPriceManagementSystem](https://github.com/Irfaninsync/ProductPriceManagementSystem)

@@ -1,3 +1,5 @@
+> **GitHub Repository:** [https://github.com/Irfaninsync/ProductPriceManagementSystem](https://github.com/Irfaninsync/ProductPriceManagementSystem)
+
 # Team Responsibilities & Contribution Matrix — PPMS
 
 ## 1. Academic Team Structure (6 Roles)
@@ -38,3 +40,7 @@ As required by software engineering academic integrity standards:
 | `[ID-004]` | `[Student 4 Name]` | Pricing & Historical Audit | _____________________ |
 | `[ID-005]` | `[Student 5 Name]` | Persistence & Quality Assurance | _____________________ |
 | `[ID-006]` | `[Student 6 Name]` | Documentation & Demonstration | _____________________ |
+
+
+---
+**GitHub Repository:** [https://github.com/Irfaninsync/ProductPriceManagementSystem](https://github.com/Irfaninsync/ProductPriceManagementSystem)

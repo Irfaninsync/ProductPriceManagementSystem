@@ -1,3 +1,4 @@
+// GitHub Repository: https://github.com/Irfaninsync/ProductPriceManagementSystem
 package com.ppms.report;
 
 import com.ppms.model.AnalyticsSummary;
@@ -122,3 +123,5 @@ public class ReportGenerator {
         return sb.toString();
     }
 }
+// End of file — GitHub Repository: https://github.com/Irfaninsync/ProductPriceManagementSystem
+

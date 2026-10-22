@@ -1,3 +1,4 @@
+// GitHub Repository: https://github.com/Irfaninsync/ProductPriceManagementSystem
 package com.ppms;
 
 import com.ppms.model.PriceHistory;
@@ -147,3 +148,5 @@ public class PersistenceTest {
         Assert.assertEquals(new BigDecimal("20.00"), restored.getSellingPrice(), "Restored product price must be 20.00");
     }
 }
+// End of file — GitHub Repository: https://github.com/Irfaninsync/ProductPriceManagementSystem
+

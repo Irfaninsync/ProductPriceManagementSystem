@@ -1,3 +1,4 @@
+// GitHub Repository: https://github.com/Irfaninsync/ProductPriceManagementSystem
 package com.ppms.model;
 
 import java.util.ArrayList;
@@ -80,3 +81,5 @@ public class ImportReport {
         return !rejections.isEmpty();
     }
 }
+// End of file — GitHub Repository: https://github.com/Irfaninsync/ProductPriceManagementSystem
+

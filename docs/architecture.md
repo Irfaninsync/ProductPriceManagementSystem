@@ -1,3 +1,5 @@
+> **GitHub Repository:** [https://github.com/Irfaninsync/ProductPriceManagementSystem](https://github.com/Irfaninsync/ProductPriceManagementSystem)
+
 # System Architecture — Product Price Management System (PPMS)
 
 ## 1. Architectural Style: Layered Architecture
@@ -122,3 +124,7 @@ To ensure permanent, collision-free identifiers without relying on an external d
 2. During CSV parsing at application startup, `observeId(String id)` extracts numeric suffixes from all existing records in `products.csv` and `price_history.csv`.
 3. The counter atomically advances to `Math.max(current, observedId)`.
 4. Archived or soft-deleted items preserve their sequence numbers, preventing identifier recycling.
+
+
+---
+**GitHub Repository:** [https://github.com/Irfaninsync/ProductPriceManagementSystem](https://github.com/Irfaninsync/ProductPriceManagementSystem)

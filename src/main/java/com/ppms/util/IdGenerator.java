@@ -1,3 +1,4 @@
+// GitHub Repository: https://github.com/Irfaninsync/ProductPriceManagementSystem
 package com.ppms.util;
 
 import java.util.concurrent.atomic.AtomicLong;
@@ -47,3 +48,5 @@ public class IdGenerator {
         return counter.get();
     }
 }
+// End of file — GitHub Repository: https://github.com/Irfaninsync/ProductPriceManagementSystem
+

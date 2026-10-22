@@ -2,12 +2,7 @@
 bin/
 *.class
 
-# Python virtual environment & temporary test scripts
-.venv/
-__pycache__/
-*.pyc
-
-# CSV staging and backup files
+# CSV staging and temporary files
 data/*.tmp
 data/*.bak
 data/backups/backup_*/manifest.txt.tmp

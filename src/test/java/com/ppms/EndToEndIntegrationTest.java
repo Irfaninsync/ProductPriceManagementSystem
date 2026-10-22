@@ -1,3 +1,4 @@
+// GitHub Repository: https://github.com/Irfaninsync/ProductPriceManagementSystem
 package com.ppms;
 
 import com.ppms.model.AnalyticsSummary;
@@ -104,3 +105,5 @@ public class EndToEndIntegrationTest {
         System.out.println("  -> End-to-End Workflow Verification Successfully Passed!");
     }
 }
+// End of file — GitHub Repository: https://github.com/Irfaninsync/ProductPriceManagementSystem
+

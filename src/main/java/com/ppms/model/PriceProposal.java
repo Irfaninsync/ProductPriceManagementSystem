@@ -1,3 +1,4 @@
+// GitHub Repository: https://github.com/Irfaninsync/ProductPriceManagementSystem
 package com.ppms.model;
 
 import com.ppms.validation.ValidationResult;
@@ -68,3 +69,5 @@ public class PriceProposal {
         return Optional.of(pct);
     }
 }
+// End of file — GitHub Repository: https://github.com/Irfaninsync/ProductPriceManagementSystem
+

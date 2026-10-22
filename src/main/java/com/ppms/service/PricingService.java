@@ -1,3 +1,4 @@
+// GitHub Repository: https://github.com/Irfaninsync/ProductPriceManagementSystem
 package com.ppms.service;
 
 import com.ppms.model.PriceHistory;
@@ -179,3 +180,5 @@ public class PricingService {
                 .min(Comparator.comparing(PriceHistory::getPriceDifference));
     }
 }
+// End of file — GitHub Repository: https://github.com/Irfaninsync/ProductPriceManagementSystem
+

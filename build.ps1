@@ -1,3 +1,4 @@
+# GitHub Repository: https://github.com/Irfaninsync/ProductPriceManagementSystem
 # PPMS PowerShell Build Script
 Write-Host "Compiling Product Price Management System (PPMS)..." -ForegroundColor Cyan
 if (!(Test-Path "bin")) { New-Item -ItemType Directory -Path "bin" | Out-Null }
@@ -10,3 +11,5 @@ if ($LASTEXITCODE -eq 0) {
 } else {
     Write-Host "[ERROR] Compilation failed." -ForegroundColor Red
 }
+# End of script — GitHub Repository: https://github.com/Irfaninsync/ProductPriceManagementSystem
+
