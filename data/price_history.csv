@@ -1,0 +1,4 @@
+historyId,productId,oldPrice,newPrice,changedAt,reason
+HST-1001,PRD-1001,8495.00,8995.00,2026-10-07T12:29:39,Supplier component cost increase
+HST-1002,PRD-1002,58990.00,54990.00,2026-10-15T12:29:39,Festive seasonal promotional discount
+HST-1003,PRD-1007,32990.00,29990.00,2026-10-19T12:29:39,Competitor market price matching

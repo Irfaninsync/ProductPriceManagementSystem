@@ -1,0 +1,11 @@
+productId,name,category,description,costPrice,sellingPrice,quantity,status,createdAt,updatedAt
+PRD-1001,Logitech MX Master 3S,Peripherals,Ergonomic wireless performance mouse,5500.00,8995.00,45,ACTIVE,2026-10-22T12:29:39,2026-10-22T12:29:39
+PRD-1002,Dell UltraSharp 27 4K,Displays,IPS USB-C Hub Monitor (U2723QE),42000.00,54990.00,12,ACTIVE,2026-10-22T12:29:39,2026-10-22T12:29:39
+PRD-1003,Keychron K2 Mechanical Keyboard,Peripherals,Wireless 75% mechanical keyboard Gateron Brown,6200.00,8499.00,28,ACTIVE,2026-10-22T12:29:39,2026-10-22T12:29:39
+PRD-1004,SanDisk Extreme SSD 1TB,Storage,Rugged portable NVMe USB 3.2 Gen 2,7800.00,10499.00,8,ACTIVE,2026-10-22T12:29:39,2026-10-22T12:29:39
+PRD-1005,USB-C to HDMI Adapter 4K,Accessories,Braided thunderbolt compatible display cable,950.00,799.00,50,ACTIVE,2026-10-22T12:29:39,2026-10-22T12:29:39
+PRD-1006,Anker 65W GaN Charger,Accessories,Compact 3-port fast wall charger,2400.00,3499.00,35,ACTIVE,2026-10-22T12:29:39,2026-10-22T12:29:39
+PRD-1007,Sony WH-1000XM5 Headphones,Audio,Premium active noise cancelling over-ear headphones,21000.00,29990.00,15,ACTIVE,2026-10-22T12:29:39,2026-10-22T12:29:39
+PRD-1008,Notebook Spiral A5 Pack of 3,Office Supplies,80 GSM ruled premium wirebound notebooks,180.00,299.00,120,ACTIVE,2026-10-22T12:29:39,2026-10-22T12:29:39
+PRD-1009,Ergonomic Aluminium Laptop Stand,Accessories,Adjustable ventilated desktop riser,1100.00,1799.00,5,ACTIVE,2026-10-22T12:29:39,2026-10-22T12:29:39
+PRD-1010,Microfiber Screen Cleaning Cloth,Accessories,Streak-free reusable cleaning cloths pack of 5,120.00,99.00,65,ACTIVE,2026-10-22T12:29:39,2026-10-22T12:29:39

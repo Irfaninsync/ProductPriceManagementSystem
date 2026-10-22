@@ -1,0 +1,20 @@
+# Compiled Java binaries
+bin/
+*.class
+
+# Python virtual environment & temporary test scripts
+.venv/
+__pycache__/
+*.pyc
+
+# CSV staging and backup files
+data/*.tmp
+data/*.bak
+data/backups/backup_*/manifest.txt.tmp
+
+# OS & IDE metadata
+.DS_Store
+Thumbs.db
+.idea/
+.vscode/
+*.iml
