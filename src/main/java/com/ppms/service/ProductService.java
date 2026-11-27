@@ -3,7 +3,9 @@ package com.ppms.service;
 
 import com.ppms.model.Product;
 import com.ppms.model.ProductStatus;
+import com.ppms.repository.ActivityRepository;
 import com.ppms.repository.ProductRepository;
+import com.ppms.repository.TransactionManager;
 import com.ppms.util.IdGenerator;
 import com.ppms.validation.ProductValidator;
 import com.ppms.validation.ValidationResult;
@@ -23,10 +25,21 @@ public class ProductService {
 
     private final ProductRepository productRepository;
     private final IdGenerator productIdGenerator;
+    private final TransactionManager transactionManager;
+    private final ActivityRepository activityRepository;
 
     public ProductService(ProductRepository productRepository, IdGenerator productIdGenerator) {
+        this(productRepository, productIdGenerator, TransactionManager.direct(), null);
+    }
+
+    public ProductService(ProductRepository productRepository,
+                          IdGenerator productIdGenerator,
+                          TransactionManager transactionManager,
+                          ActivityRepository activityRepository) {
         this.productRepository = Objects.requireNonNull(productRepository, "ProductRepository cannot be null");
         this.productIdGenerator = Objects.requireNonNull(productIdGenerator, "IdGenerator cannot be null");
+        this.transactionManager = transactionManager != null ? transactionManager : TransactionManager.direct();
+        this.activityRepository = activityRepository;
     }
 
     /**
@@ -64,7 +77,14 @@ public class ProductService {
                     + validation.getFormattedErrors());
         }
 
-        return productRepository.save(product);
+        return transactionManager.inTransaction(() -> {
+            Product saved = productRepository.save(product);
+            if (activityRepository != null) {
+                activityRepository.record("PRODUCT_CREATED", "PRODUCT", saved.getProductId(),
+                        "Added product '" + saved.getName() + "' (" + saved.getProductId() + ") in " + saved.getCategory());
+            }
+            return saved;
+        });
     }
 
     public Optional<Product> getProductById(String productId) {
@@ -91,7 +111,6 @@ public class ProductService {
         Product existing = productRepository.findById(productId)
                 .orElseThrow(() -> new IllegalArgumentException("Product not found with ID: " + productId));
 
-        // Create defensive copy to test validation safely
         Product draft = new Product(existing);
         draft.updateDetails(newName, newCategory, newDescription);
 
@@ -100,7 +119,52 @@ public class ProductService {
             throw new IllegalArgumentException("Cannot update product details:\n" + validation.getFormattedErrors());
         }
 
-        return productRepository.save(draft);
+        return transactionManager.inTransaction(() -> {
+            Product saved = productRepository.save(draft);
+            if (activityRepository != null) {
+                activityRepository.record("PRODUCT_UPDATED", "PRODUCT", saved.getProductId(),
+                        "Updated details for '" + saved.getName() + "' (" + saved.getProductId() + ")");
+            }
+            return saved;
+        });
+    }
+
+    /**
+     * Updates non-selling-price product attributes atomically (name, category, description, cost price, stock quantity).
+     */
+    public Product updateProductFull(String productId,
+                                     String newName,
+                                     String newCategory,
+                                     String newDescription,
+                                     BigDecimal newCostPrice,
+                                     int newQuantity) {
+        Product existing = productRepository.findById(productId)
+                .orElseThrow(() -> new IllegalArgumentException("Product not found with ID: " + productId));
+
+        Product draft = new Product(existing);
+        draft.updateDetails(newName, newCategory, newDescription);
+
+        ValidationResult validation = new ValidationResult();
+        ProductValidator.validateName(draft.getName(), validation);
+        ProductValidator.validateCategory(draft.getCategory(), validation);
+        ProductValidator.validateDescription(draft.getDescription(), validation);
+        ProductValidator.validateCostPrice(newCostPrice, validation);
+        ProductValidator.validateQuantity(newQuantity, validation);
+        if (validation.hasErrors()) {
+            throw new IllegalArgumentException("Cannot update product:\n" + validation.getFormattedErrors());
+        }
+
+        draft.setCostPrice(newCostPrice);
+        draft.setQuantity(newQuantity);
+
+        return transactionManager.inTransaction(() -> {
+            Product saved = productRepository.save(draft);
+            if (activityRepository != null) {
+                activityRepository.record("PRODUCT_UPDATED", "PRODUCT", saved.getProductId(),
+                        "Edited product '" + saved.getName() + "' (" + saved.getProductId() + ")");
+            }
+            return saved;
+        });
     }
 
     /**
@@ -118,7 +182,14 @@ public class ProductService {
 
         Product draft = new Product(existing);
         draft.setCostPrice(newCostPrice);
-        return productRepository.save(draft);
+        return transactionManager.inTransaction(() -> {
+            Product saved = productRepository.save(draft);
+            if (activityRepository != null) {
+                activityRepository.record("PRODUCT_UPDATED", "PRODUCT", saved.getProductId(),
+                        "Updated cost price for '" + saved.getName() + "' (" + saved.getProductId() + ")");
+            }
+            return saved;
+        });
     }
 
     /**
@@ -136,7 +207,14 @@ public class ProductService {
 
         Product draft = new Product(existing);
         draft.setQuantity(newQuantity);
-        return productRepository.save(draft);
+        return transactionManager.inTransaction(() -> {
+            Product saved = productRepository.save(draft);
+            if (activityRepository != null) {
+                activityRepository.record("PRODUCT_UPDATED", "PRODUCT", saved.getProductId(),
+                        "Updated stock quantity for '" + saved.getName() + "' (" + saved.getProductId() + ") to " + newQuantity);
+            }
+            return saved;
+        });
     }
 
     /**
@@ -152,7 +230,14 @@ public class ProductService {
 
         Product draft = new Product(existing);
         draft.setStatus(ProductStatus.ARCHIVED);
-        return productRepository.save(draft);
+        return transactionManager.inTransaction(() -> {
+            Product saved = productRepository.save(draft);
+            if (activityRepository != null) {
+                activityRepository.record("PRODUCT_ARCHIVED", "PRODUCT", saved.getProductId(),
+                        "Archived product '" + saved.getName() + "' (" + saved.getProductId() + ")");
+            }
+            return saved;
+        });
     }
 
     /**
@@ -168,7 +253,33 @@ public class ProductService {
 
         Product draft = new Product(existing);
         draft.setStatus(ProductStatus.ACTIVE);
-        return productRepository.save(draft);
+        return transactionManager.inTransaction(() -> {
+            Product saved = productRepository.save(draft);
+            if (activityRepository != null) {
+                activityRepository.record("PRODUCT_RESTORED", "PRODUCT", saved.getProductId(),
+                        "Restored product '" + saved.getName() + "' (" + saved.getProductId() + ")");
+            }
+            return saved;
+        });
+    }
+
+    /**
+     * Permanently deletes a product and its associated audit entries.
+     */
+    public void deleteProduct(String productId) {
+        Product existing = productRepository.findById(productId)
+                .orElseThrow(() -> new IllegalArgumentException("Product not found with ID: " + productId));
+
+        transactionManager.inTransactionVoid(() -> {
+            boolean deleted = productRepository.deleteById(existing.getProductId());
+            if (!deleted) {
+                throw new IllegalStateException("Failed to delete product: " + productId);
+            }
+            if (activityRepository != null) {
+                activityRepository.record("PRODUCT_DELETED", "PRODUCT", existing.getProductId(),
+                        "Deleted product '" + existing.getName() + "' (" + existing.getProductId() + ")");
+            }
+        });
     }
 
     /**
@@ -253,9 +364,18 @@ public class ProductService {
                 comparator = Comparator.comparingInt(Product::getQuantity)
                         .thenComparing(Product::getProductId);
                 break;
+            case "created":
+            case "createdat":
+                comparator = Comparator.comparing(Product::getCreatedAt)
+                        .thenComparing(Product::getProductId);
+                break;
             case "updated":
             case "updatedat":
                 comparator = Comparator.comparing(Product::getUpdatedAt)
+                        .thenComparing(Product::getProductId);
+                break;
+            case "margin":
+                comparator = Comparator.comparing(Product::getGrossMarginAmount)
                         .thenComparing(Product::getProductId);
                 break;
             case "name":
@@ -282,4 +402,3 @@ public class ProductService {
     }
 }
 // End of file — GitHub Repository: https://github.com/Irfaninsync/ProductPriceManagementSystem
-

@@ -50,6 +50,13 @@ public interface ProductRepository {
     int count();
 
     /**
+     * Deletes a product permanently by ID (case-insensitive).
+     */
+    default boolean deleteById(String productId) {
+        throw new UnsupportedOperationException("Permanent deletion is not supported by this repository.");
+    }
+
+    /**
      * Forces a fresh reload from the underlying storage.
      */
     void reload();

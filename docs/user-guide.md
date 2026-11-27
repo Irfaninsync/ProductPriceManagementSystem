@@ -1,134 +1,51 @@
 > **GitHub Repository:** [https://github.com/Irfaninsync/ProductPriceManagementSystem](https://github.com/Irfaninsync/ProductPriceManagementSystem)
 
-# User Manual & Operator Guide — PPMS
+# User Manual & Operator Guide — PPMS v2.0
 
-## 1. Getting Started
+## 1. Installing & Launching PPMS on Windows
 
-### 1.1 Prerequisites & Git Clone
-To clone and get started immediately:
-```bash
-git clone https://github.com/Irfaninsync/ProductPriceManagementSystem.git
-cd ProductPriceManagementSystem
-```
+### Option A: Packaged Standalone App (Recommended for Business Owners)
+1. Build or copy the `dist/PPMS/` folder to any location on your Windows 10/11 PC (e.g., `C:\Program Files\PPMS` or `C:\PPMS`).
+2. Double-click **`PPMS.exe`** (or run `packaging\create-desktop-shortcut.ps1` once to put an icon on your Desktop).
+3. PPMS starts silently in the background, initializes your local SQLite ledger in `%LOCALAPPDATA%\PPMS\ppms.db`, adds a **P** icon to your Windows System Tray, and opens PPMS in your default browser.
+4. No Java installation, terminal window, or internet connection is required.
 
-### 1.2 System Requirements
-- Java Development Kit (JDK) 17 or higher.
-- Standard terminal (Windows Command Prompt, Windows PowerShell, Terminal on macOS/Linux).
-
-### 1.2 Compiling the System
-Run the provided platform script from the project root:
-- **Windows Command Prompt**:
-  ```cmd
-  compile.bat
-  ```
-- **Windows PowerShell**:
-  ```powershell
-  ./build.ps1
-  ```
-- **Linux / macOS**:
-  ```bash
-  bash compile.sh
-  ```
-- **Manual Plain Javac (any platform)**:
-  ```bash
-  javac -d bin -encoding UTF-8 src/main/java/com/ppms/*/*.java src/test/java/com/ppms/*.java
-  ```
-
-### 1.3 Running the Application
-- **Windows Command Prompt**:
-  ```cmd
-  run.bat
-  ```
-- **Windows PowerShell**:
-  ```powershell
-  ./run.ps1
-  ```
-- **Linux / macOS**:
-  ```bash
-  bash run.sh
-  ```
-- **Manual Command**:
-  ```bash
-  java -cp bin com.ppms.app.Main
-  ```
-
-### 1.4 Running the Automated Test Suite
-- **Windows Command Prompt**:
-  ```cmd
-  test.bat
-  ```
-- **Manual Command**:
-  ```bash
-  java -cp bin com.ppms.TestRunner
-  ```
+### Option B: Running from Source (Developers)
+- Compile & launch: `./run.ps1` (PowerShell) or `run.bat` (Command Prompt).
+- Silent desktop launch without terminal: double-click `packaging/launch-ppms.vbs`.
+- Legacy terminal CLI mode: `java -cp "bin;lib/*" com.ppms.app.Main --cli`.
 
 ---
 
-## 2. Main Navigation & Workflows
+## 2. Managing Your Business Data
 
-### 2.1 Main Dashboard
-Upon launching, the interactive dashboard automatically calculates and presents:
-- Total Registered Products, Active Count, Archived Count.
-- Total Inventory Units in Stock.
-- Lowest, Highest, Average, and Median Selling Price.
-- Number of products priced below cost (Loss-Leader alert).
-- Total Inventory Valuation.
-- Low-stock item count.
-- Recent 3 price change events with percentage differences.
+### Dashboard
+- Displays real-time totals for active products, categories, inventory cost & retail value, average/median price, risk alerts (below-cost or low-stock), category valuations, price band overview, recently updated prices, and recent activity.
+- On a brand-new install, the database starts clean with zero fake business records. You can immediately **Add First Product**, **Import from CSV**, migrate a legacy `data/products.csv`, or optionally click **Load Sample Catalog** for evaluation.
 
-### 2.2 Product Catalog Management (Menu 1)
-- **Add Product**: Prompts for custom ID (or leave blank for automated sequential `PRD-xxxx`), Name, Category, Description, Cost Price, Selling Price, and Stock Quantity.
-- **Inspect Product**: Displays all financial attributes, calculated gross margins, markup %, and price change history.
-- **Search**: Case-insensitive substring search across ID, name, category, and description.
-- **Filter**: Filter by category, status (Active/Archived), selling price boundaries, below-cost status, and low stock.
-- **Sort**: Deterministic sorting by Name, ID, Category, Selling Price, Cost Price, Stock, or Last Updated.
-- **Archive & Restore**: Safely soft-archive items without destroying their price history audit records.
+### Products & Product Details
+- Use **+ Add Product** in the top bar or **Products** view to add items (Cost Price, Selling Price, Stock Quantity, Category, Description). A live Unit Margin preview highlights if a selling price is below cost.
+- Filter by category, Active/Archived status, price bounds, below-cost items, or low-stock items; sort by name, price, stock, ID, or last updated date.
+- Click any product name or ID to open **Product Details** showing financial ratios, chronological price trend chart, and full price history.
+- Use **Archive** to retire a seasonal/discontinued item while preserving its history, or **Delete** (with confirmation) to permanently remove an item.
 
-### 2.3 Pricing Operations (Menu 2)
-- **Single Price Adjustment**:
-  1. Enter product ID.
-  2. Enter proposed new selling price.
-  3. Enter audit reason (mandatory).
-  4. Review the generated **Price Change Preview**:
-     * Current Price
-     * Proposed Price
-     * Absolute Difference (`+` or `-`)
-     * Percentage Change (`+` or `-` %)
-     * Cost Price Comparison Warning (if below cost)
-  5. Enter `yes` to confirm and commit, or `no` to cancel.
-- **Bulk Percentage Price Adjustment**:
-  1. Select scope (by category or all active products).
-  2. Enter percentage adjustment (e.g. `10` for +10%, or `-5` for -5% discount).
-  3. Enter reason.
-  4. Inspect tabular preview of all proposed prices before any changes are made.
-  5. Confirm to execute.
+### Price Management
+- **Single Price Update:** Select a product, enter the new selling price and business reason, click **Preview Price Comparison** to inspect the exact price delta and margin impact, then click **Confirm & Apply Change**.
+- **Bulk Percentage Revaluation:** Apply a percentage increase/decrease across all active products or a single category, review the tabular preview, and confirm. PPMS automatically creates a safety backup before applying bulk price updates.
+- **Price Change History:** Filter audit logs by Product ID, date range, or reason keyword, and inspect the largest historical price increase and decrease.
 
-### 2.4 Price History & Audit Trail (Menu 3)
-- View complete chronological audit trail.
-- Filter audit records by specific Product ID.
-- Filter audit records by Date Range (`yyyy-MM-dd`).
-- Filter audit records by reason keyword.
-- Inspect the Largest Historical Price Increase and Largest Historical Price Decrease.
+### Categories
+- Create, rename, and delete categories. Renaming a category automatically updates all assigned products. Deleting a non-empty category prompts you to safely reassign its products to another category.
 
-### 2.5 Analytical Reports (Menu 4)
-- **Executive Pricing & Valuation Summary**: Enterprise-wide financial health, inventory valuation at cost vs retail, and margin potential.
-- **Category Performance Breakdown**: Units, total inventory cost, retail valuation, and average profit margin per category.
-- **Below-Cost Loss Leader Analysis**: Identifies products whose selling price is lower than cost price.
-- **Low-Stock Alert**: Identifies products requiring restocking based on the configured threshold.
+### Reports, CSV Export & Print / PDF
+- Open **Reports & Analytics** to view **Product Catalogue**, **Category Summary**, **Price Comparison**, **Price Change History**, and **Inventory Valuation & Risks**.
+- Click **Export CSV** to download spreadsheets, or **Print / Save as PDF** to save formatted reports using Windows Print-to-PDF.
 
-### 2.6 Data Management & Backups (Menu 5)
-- **Export Products / Price History to CSV**: Generates RFC-4180 compliant CSV files with full escaping.
-- **Import Products from CSV**: Validates external CSV files, checks column schemas, detects duplicates, displays row-by-row rejections with line numbers, and prompts before committing valid rows.
-- **Create Snapshot Backup**: Creates a timestamped directory in `data/backups/backup_yyyyMMdd_HHmmss_SSS/` containing `products.csv`, `price_history.csv`, and `metadata.csv`.
-- **Restore Snapshot**: Prompts to select an available backup snapshot, verifies header integrity, creates an automatic safety snapshot of current data, and restores files.
-
-### 2.7 Application Settings & User Guide (Menu 6)
-- Configure low-stock warning threshold (default: 10).
-- Configure currency symbol (`Rs. `, `₹`, `$`, `EUR`, etc.).
-- Toggle ANSI terminal colors.
-- Toggle clean box-drawing characters vs plain ASCII borders.
-- View embedded user guide.
-
+### Backups, Restore & Closing PPMS
+- Open **Settings & Data** to configure Business Name, Currency Symbol (`₹`, `Rs.`, `$`, `€`, `£`), and Low-Stock Threshold.
+- Click **Create Backup Now** (or **Quick Backup** in the sidebar) to save a snapshot `.db` file inside `%LOCALAPPDATA%\PPMS\backups\`.
+- To restore a backup, click **Restore** next to any snapshot—PPMS verifies file integrity first and automatically creates a pre-restore safety snapshot of your current data before switching.
+- Click **Exit Application** in the sidebar (or right-click the **P** tray icon -> **Quit PPMS**) to shut down safely.
 
 ---
 **GitHub Repository:** [https://github.com/Irfaninsync/ProductPriceManagementSystem](https://github.com/Irfaninsync/ProductPriceManagementSystem)

@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <!--PPMS_TOKEN-->
+  <title>PPMS — Product Price Management System</title>
+  <link rel="icon" type="image/svg+xml" href="/assets/icons/ppms-mark.svg">
+  <link rel="stylesheet" href="/css/tokens.css">
+  <link rel="stylesheet" href="/css/layout.css">
+  <link rel="stylesheet" href="/css/components.css">
+</head>
+<body>
+  <div class="app-shell">
+    <div id="sidebar-backdrop" class="sidebar-backdrop" aria-hidden="true"></div>
+
+    <aside id="sidebar" class="sidebar" aria-label="Primary Navigation">
+      <div class="sidebar-brand">
+        <img src="/assets/icons/ppms-mark.svg" alt="PPMS" class="brand-mark">
+        <div class="brand-copy">
+          <div class="brand-title">PPMS</div>
+          <div id="sidebar-business-name" class="brand-subtitle">Local Business Ledger</div>
+        </div>
+      </div>
+
+      <nav class="sidebar-nav">
+        <a href="#/dashboard" class="nav-item" data-route="dashboard">
+          <span class="nav-icon" data-icon="dashboard"></span>
+          <span>Dashboard</span>
+        </a>
+        <a href="#/products" class="nav-item" data-route="products">
+          <span class="nav-icon" data-icon="products"></span>
+          <span>Products</span>
+        </a>
+        <a href="#/pricing" class="nav-item" data-route="pricing">
+          <span class="nav-icon" data-icon="pricing"></span>
+          <span>Price Management</span>
+        </a>
+        <a href="#/categories" class="nav-item" data-route="categories">
+          <span class="nav-icon" data-icon="categories"></span>
+          <span>Categories</span>
+        </a>
+        <a href="#/reports" class="nav-item" data-route="reports">
+          <span class="nav-icon" data-icon="reports"></span>
+          <span>Reports &amp; Analytics</span>
+        </a>
+        <a href="#/settings" class="nav-item" data-route="settings">
+          <span class="nav-icon" data-icon="settings"></span>
+          <span>Settings &amp; Data</span>
+        </a>
+      </nav>
+
+      <div class="sidebar-footer">
+        <div class="db-status-pill" id="db-status-pill">
+          <span class="status-dot"></span>
+          <span>Local SQLite &bull; Saved</span>
+        </div>
+        <div class="sidebar-footer-actions">
+          <button type="button" id="btn-quick-backup" class="btn btn-secondary btn-sm btn-full">
+            <span data-icon="backup"></span>
+            <span>Quick Backup</span>
+          </button>
+          <button type="button" id="btn-quit-app" class="btn btn-ghost btn-sm btn-full">
+            <span data-icon="power"></span>
+            <span>Exit Application</span>
+          </button>
+        </div>
+      </div>
+    </aside>
+
+    <div class="main-column">
+      <header class="topbar">
+        <div class="topbar-left">
+          <button type="button" id="btn-mobile-menu" class="icon-btn mobile-only" aria-label="Toggle Menu">
+            <span data-icon="menu"></span>
+          </button>
+          <div>
+            <h1 id="topbar-title" class="page-title">Dashboard</h1>
+            <p id="topbar-subtitle" class="page-subtitle">Overview of catalog health and pricing updates</p>
+          </div>
+        </div>
+
+        <div class="topbar-right">
+          <div class="quick-search-wrap" id="quick-search-wrap">
+            <span class="quick-search-icon" data-icon="search"></span>
+            <input type="search" id="global-quick-search" class="quick-search-input"
+                   placeholder="Search products or IDs... (Ctrl+K)" autocomplete="off">
+            <div id="quick-search-results" class="quick-search-dropdown hidden"></div>
+          </div>
+          <button type="button" id="btn-topbar-add-product" class="btn btn-primary">
+            <span data-icon="plus"></span>
+            <span>Add Product</span>
+          </button>
+        </div>
+      </header>
+
+      <div class="print-header print-only">
+        <div class="print-brand" id="print-business-name">Product Price Management System (PPMS)</div>
+        <div class="print-meta" id="print-report-meta">Generated locally</div>
+      </div>
+
+      <main id="app-view" class="workspace" tabindex="-1"></main>
+    </div>
+  </div>
+
+  <div id="modal-root" class="modal-backdrop hidden" role="dialog" aria-modal="true"></div>
+  <div id="toast-root" class="toast-stack" aria-live="polite"></div>
+
+  <script type="module" src="/js/app.js"></script>
+</body>
+</html>

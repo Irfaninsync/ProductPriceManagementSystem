@@ -1,0 +1,111 @@
+@font-face {
+  font-family: "Inter";
+  src: url("/assets/fonts/inter-400.woff2") format("woff2");
+  font-weight: 400;
+  font-style: normal;
+  font-display: swap;
+}
+@font-face {
+  font-family: "Inter";
+  src: url("/assets/fonts/inter-500.woff2") format("woff2");
+  font-weight: 500;
+  font-style: normal;
+  font-display: swap;
+}
+@font-face {
+  font-family: "Inter";
+  src: url("/assets/fonts/inter-600.woff2") format("woff2");
+  font-weight: 600;
+  font-style: normal;
+  font-display: swap;
+}
+@font-face {
+  font-family: "Inter";
+  src: url("/assets/fonts/inter-700.woff2") format("woff2");
+  font-weight: 700;
+  font-style: normal;
+  font-display: swap;
+}
+@font-face {
+  font-family: "IBM Plex Mono";
+  src: url("/assets/fonts/ibm-plex-mono-400.woff2") format("woff2");
+  font-weight: 400;
+  font-style: normal;
+  font-display: swap;
+}
+@font-face {
+  font-family: "IBM Plex Mono";
+  src: url("/assets/fonts/ibm-plex-mono-500.woff2") format("woff2");
+  font-weight: 500;
+  font-style: normal;
+  font-display: swap;
+}
+
+:root {
+  --bg-canvas: #F7F6F2;
+  --surface-primary: #FFFFFF;
+  --surface-secondary: #F0EFEA;
+  --surface-hover: #EAE8E1;
+
+  --text-primary: #252522;
+  --text-secondary: #77766F;
+  --text-muted: #98968E;
+
+  --accent: #713B43;
+  --accent-hover: #5C2F36;
+  --accent-soft: #F4ECEE;
+  --accent-border: #D9C3C7;
+
+  --border: #E5E3DC;
+  --border-strong: #D2CFC5;
+
+  --success-text: #2F684C;
+  --success-bg: #EDF4EF;
+  --success-border: #CBE0D2;
+
+  --warning-text: #8C5A1B;
+  --warning-bg: #FAF3E6;
+  --warning-border: #EAD6B2;
+
+  --error-text: #8B2D35;
+  --error-bg: #F9EEF0;
+  --error-border: #E4C4C7;
+
+  --font-sans: "Inter", "Segoe UI", -apple-system, BlinkMacSystemFont, sans-serif;
+  --font-mono: "IBM Plex Mono", Consolas, "Courier New", monospace;
+
+  --radius-sm: 4px;
+  --radius-md: 6px;
+  --radius-lg: 8px;
+
+  --sidebar-width: 244px;
+  --topbar-height: 60px;
+}
+
+*, *::before, *::after {
+  box-sizing: border-box;
+}
+
+html, body {
+  margin: 0;
+  padding: 0;
+  background-color: var(--bg-canvas);
+  color: var(--text-primary);
+  font-family: var(--font-sans);
+  font-size: 14px;
+  line-height: 1.5;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+.mono {
+  font-family: var(--font-mono);
+}
+
+.num {
+  font-variant-numeric: tabular-nums;
+}
+
+.hidden {
+  display: none !important;
+}

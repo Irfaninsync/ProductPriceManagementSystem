@@ -104,6 +104,19 @@ public class CsvProductRepository implements ProductRepository {
     }
 
     @Override
+    public synchronized boolean deleteById(String productId) {
+        if (productId == null || productId.trim().isEmpty()) {
+            return false;
+        }
+        Product removed = productCache.remove(productId.trim().toUpperCase());
+        if (removed != null) {
+            flushToDisk();
+            return true;
+        }
+        return false;
+    }
+
+    @Override
     public synchronized void reload() {
         productCache.clear();
         try {

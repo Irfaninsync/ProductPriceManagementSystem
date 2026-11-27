@@ -2,6 +2,7 @@
 package com.ppms.service;
 
 import com.ppms.model.AnalyticsSummary;
+import com.ppms.model.PriceHistory;
 import com.ppms.model.Product;
 import com.ppms.repository.PriceHistoryRepository;
 import com.ppms.repository.ProductRepository;
@@ -9,7 +10,10 @@ import java.math.BigDecimal;
 import java.math.RoundingMode;
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.Comparator;
+import java.util.LinkedHashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.Objects;
 import java.util.stream.Collectors;
 
@@ -142,6 +146,68 @@ public class AnalyticsService {
         return productRepository.findActive().stream()
                 .filter(Product::isOutOfStock)
                 .collect(Collectors.toList());
+    }
+
+    public List<Product> getRecentlyAddedProducts(int limit) {
+        return productRepository.findAll().stream()
+                .sorted(Comparator.comparing(Product::getCreatedAt).reversed()
+                        .thenComparing(Product::getProductId))
+                .limit(Math.max(1, limit))
+                .collect(Collectors.toList());
+    }
+
+    public List<PriceHistory> getRecentPriceChanges(int limit) {
+        return priceHistoryRepository.findAll().stream()
+                .sorted(Comparator.comparing(PriceHistory::getChangedAt).reversed()
+                        .thenComparing(PriceHistory::getHistoryId, Comparator.reverseOrder()))
+                .limit(Math.max(1, limit))
+                .collect(Collectors.toList());
+    }
+
+    /**
+     * Computes real price-band counts across active products for price overview visualization.
+     */
+    public List<Map<String, Object>> getActivePriceBands() {
+        List<Product> active = productRepository.findActive();
+        if (active.isEmpty()) {
+            return Collections.emptyList();
+        }
+        BigDecimal min = active.stream().map(Product::getSellingPrice).min(BigDecimal::compareTo).orElse(BigDecimal.ZERO);
+        BigDecimal max = active.stream().map(Product::getSellingPrice).max(BigDecimal::compareTo).orElse(BigDecimal.ZERO);
+        if (min.compareTo(max) == 0) {
+            Map<String, Object> single = new LinkedHashMap<>();
+            single.put("label", min.toPlainString());
+            single.put("minPrice", min);
+            single.put("maxPrice", max);
+            single.put("count", active.size());
+            return List.of(single);
+        }
+
+        int bucketCount = Math.min(5, Math.max(2, active.size()));
+        BigDecimal range = max.subtract(min);
+        BigDecimal step = range.divide(BigDecimal.valueOf(bucketCount), 2, RoundingMode.CEILING);
+        if (step.compareTo(BigDecimal.ZERO) <= 0) {
+            step = BigDecimal.ONE;
+        }
+
+        List<Map<String, Object>> buckets = new ArrayList<>();
+        for (int i = 0; i < bucketCount; i++) {
+            BigDecimal low = min.add(step.multiply(BigDecimal.valueOf(i)));
+            BigDecimal high = (i == bucketCount - 1) ? max : min.add(step.multiply(BigDecimal.valueOf(i + 1)));
+            boolean isLast = (i == bucketCount - 1);
+            long count = active.stream().filter(p -> {
+                BigDecimal sp = p.getSellingPrice();
+                boolean geLow = sp.compareTo(low) >= 0;
+                boolean ltOrLeHigh = isLast ? sp.compareTo(high) <= 0 : sp.compareTo(high) < 0;
+                return geLow && ltOrLeHigh;
+            }).count();
+            Map<String, Object> bucket = new LinkedHashMap<>();
+            bucket.put("minPrice", low);
+            bucket.put("maxPrice", high);
+            bucket.put("count", (int) count);
+            buckets.add(bucket);
+        }
+        return Collections.unmodifiableList(buckets);
     }
 }
 // End of file — GitHub Repository: https://github.com/Irfaninsync/ProductPriceManagementSystem

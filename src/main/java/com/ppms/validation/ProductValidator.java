@@ -16,6 +16,7 @@ public class ProductValidator {
     private static final int MAX_CATEGORY_LENGTH = 60;
     private static final int MIN_CATEGORY_LENGTH = 2;
     private static final int MAX_DESCRIPTION_LENGTH = 500;
+    private static final BigDecimal MAX_MONETARY_AMOUNT = new BigDecimal("99999999999.99");
 
     /**
      * Validates an entire Product instance.
@@ -88,6 +89,8 @@ public class ProductValidator {
         }
         if (costPrice.compareTo(BigDecimal.ZERO) < 0) {
             result.addError("Cost price cannot be negative (provided: " + costPrice + ").");
+        } else if (costPrice.compareTo(MAX_MONETARY_AMOUNT) > 0) {
+            result.addError("Cost price exceeds maximum supported limit.");
         }
     }
 
@@ -98,6 +101,8 @@ public class ProductValidator {
         }
         if (sellingPrice.compareTo(BigDecimal.ZERO) < 0) {
             result.addError("Selling price cannot be negative (provided: " + sellingPrice + ").");
+        } else if (sellingPrice.compareTo(MAX_MONETARY_AMOUNT) > 0) {
+            result.addError("Selling price exceeds maximum supported limit.");
         }
     }
 
@@ -118,6 +123,8 @@ public class ProductValidator {
         }
         if (newPrice.compareTo(BigDecimal.ZERO) < 0) {
             result.addError("Proposed selling price cannot be negative.");
+        } else if (newPrice.compareTo(MAX_MONETARY_AMOUNT) > 0) {
+            result.addError("Proposed selling price exceeds maximum supported limit.");
         }
         if (currentPrice != null && currentPrice.compareTo(newPrice) == 0) {
             result.addError("New price is identical to current price (" + currentPrice + "). No price change recorded.");

@@ -3,6 +3,5 @@
 if [ ! -f "bin/com/ppms/app/Main.class" ]; then
     bash compile.sh
 fi
-java -cp bin com.ppms.app.Main
+java -cp "bin:lib/*" com.ppms.app.Main "$@"
 # End of script — GitHub Repository: https://github.com/Irfaninsync/ProductPriceManagementSystem
-

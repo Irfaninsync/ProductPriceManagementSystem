@@ -4,8 +4,11 @@ package com.ppms.service;
 import com.ppms.model.PriceHistory;
 import com.ppms.model.PriceProposal;
 import com.ppms.model.Product;
+import com.ppms.repository.ActivityRepository;
 import com.ppms.repository.PriceHistoryRepository;
 import com.ppms.repository.ProductRepository;
+import com.ppms.repository.TransactionManager;
+import com.ppms.util.CurrencyFormatter;
 import com.ppms.util.IdGenerator;
 import com.ppms.validation.ProductValidator;
 import com.ppms.validation.ValidationResult;
@@ -30,13 +33,25 @@ public class PricingService {
     private final ProductRepository productRepository;
     private final PriceHistoryRepository priceHistoryRepository;
     private final IdGenerator historyIdGenerator;
+    private final TransactionManager transactionManager;
+    private final ActivityRepository activityRepository;
 
     public PricingService(ProductRepository productRepository,
                           PriceHistoryRepository priceHistoryRepository,
                           IdGenerator historyIdGenerator) {
+        this(productRepository, priceHistoryRepository, historyIdGenerator, TransactionManager.direct(), null);
+    }
+
+    public PricingService(ProductRepository productRepository,
+                          PriceHistoryRepository priceHistoryRepository,
+                          IdGenerator historyIdGenerator,
+                          TransactionManager transactionManager,
+                          ActivityRepository activityRepository) {
         this.productRepository = Objects.requireNonNull(productRepository, "ProductRepository cannot be null");
         this.priceHistoryRepository = Objects.requireNonNull(priceHistoryRepository, "PriceHistoryRepository cannot be null");
         this.historyIdGenerator = Objects.requireNonNull(historyIdGenerator, "History IdGenerator cannot be null");
+        this.transactionManager = transactionManager != null ? transactionManager : TransactionManager.direct();
+        this.activityRepository = activityRepository;
     }
 
     /**
@@ -48,6 +63,9 @@ public class PricingService {
 
         BigDecimal normalizedProposed = Product.normalizePrice(proposedPrice);
         ValidationResult validation = ProductValidator.validatePriceChange(product.getSellingPrice(), normalizedProposed, reason);
+        if (product.isArchived()) {
+            validation.addError("Product '" + product.getName() + "' is archived. Restore it before modifying its selling price.");
+        }
 
         return new PriceProposal(product, normalizedProposed, reason, validation);
     }
@@ -62,33 +80,45 @@ public class PricingService {
                     + proposal.getValidationResult().getFormattedErrors());
         }
 
-        Product currentProduct = productRepository.findById(proposal.getProduct().getProductId())
-                .orElseThrow(() -> new IllegalStateException("Product has been removed: " + proposal.getProduct().getProductId()));
+        return transactionManager.inTransaction(() -> {
+            Product currentProduct = productRepository.findById(proposal.getProduct().getProductId())
+                    .orElseThrow(() -> new IllegalStateException("Product has been removed: " + proposal.getProduct().getProductId()));
 
-        BigDecimal oldPrice = currentProduct.getSellingPrice();
-        BigDecimal newPrice = proposal.getProposedPrice();
+            if (currentProduct.isArchived()) {
+                throw new IllegalStateException("Cannot update selling price of an archived product. Restore it first.");
+            }
 
-        if (oldPrice.compareTo(newPrice) == 0) {
-            throw new IllegalArgumentException("New price is identical to current price. No change recorded.");
-        }
+            BigDecimal oldPrice = currentProduct.getSellingPrice();
+            BigDecimal newPrice = proposal.getProposedPrice();
 
-        // 1. Update product selling price
-        Product updatedProduct = new Product(currentProduct);
-        updatedProduct.setSellingPrice(newPrice);
-        productRepository.save(updatedProduct);
+            if (oldPrice.compareTo(newPrice) == 0) {
+                throw new IllegalArgumentException("New price is identical to current price. No change recorded.");
+            }
 
-        // 2. Generate permanent history record
-        String historyId = historyIdGenerator.nextId();
-        PriceHistory historyRecord = new PriceHistory(
-                historyId,
-                updatedProduct.getProductId(),
-                oldPrice,
-                newPrice,
-                LocalDateTime.now(),
-                proposal.getReason()
-        );
+            // 1. Update product selling price
+            Product updatedProduct = new Product(currentProduct);
+            updatedProduct.setSellingPrice(newPrice);
+            productRepository.save(updatedProduct);
 
-        return priceHistoryRepository.save(historyRecord);
+            // 2. Generate permanent history record
+            String historyId = historyIdGenerator.nextId();
+            PriceHistory historyRecord = new PriceHistory(
+                    historyId,
+                    updatedProduct.getProductId(),
+                    oldPrice,
+                    newPrice,
+                    LocalDateTime.now(),
+                    proposal.getReason()
+            );
+
+            PriceHistory savedHistory = priceHistoryRepository.save(historyRecord);
+            if (activityRepository != null) {
+                activityRepository.record("PRICE_CHANGED", "PRODUCT", updatedProduct.getProductId(),
+                        "Updated price of '" + updatedProduct.getName() + "' from "
+                                + CurrencyFormatter.format(oldPrice) + " to " + CurrencyFormatter.format(newPrice));
+            }
+            return savedHistory;
+        });
     }
 
     /**
@@ -129,13 +159,15 @@ public class PricingService {
      * Applies a list of verified proposals in a bulk transaction.
      */
     public synchronized List<PriceHistory> applyBulkAdjustments(List<PriceProposal> proposals) {
-        List<PriceHistory> executed = new ArrayList<>();
-        for (PriceProposal proposal : proposals) {
-            if (proposal.isValid()) {
-                executed.add(applyPriceChange(proposal));
+        return transactionManager.inTransaction(() -> {
+            List<PriceHistory> executed = new ArrayList<>();
+            for (PriceProposal proposal : proposals) {
+                if (proposal.isValid()) {
+                    executed.add(applyPriceChange(proposal));
+                }
             }
-        }
-        return executed;
+            return executed;
+        });
     }
 
     // --- Querying History ---

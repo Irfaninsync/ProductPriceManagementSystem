@@ -61,7 +61,19 @@ public class CurrencyFormatter {
         if (raw == null) {
             throw new NumberFormatException("Price string cannot be null");
         }
-        String clean = raw.trim().replace(currencySymbol, "").replace("$", "").replace(",", "").trim();
+        String clean = raw.trim();
+        if (!currencySymbol.isEmpty()) {
+            clean = clean.replace(currencySymbol, "");
+        }
+        clean = clean.replace("\u20B9", "")
+                .replace("Rs.", "")
+                .replace("RS.", "")
+                .replace("INR", "")
+                .replace("$", "")
+                .replace("\u20AC", "")
+                .replace("\u00A3", "")
+                .replace(",", "")
+                .trim();
         if (clean.isEmpty()) {
             throw new NumberFormatException("Price string cannot be empty");
         }

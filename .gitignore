@@ -1,6 +1,9 @@
-# Compiled Java binaries
+# Compiled Java binaries & packaged output
 bin/
+dist/
 *.class
+*.jar
+!lib/*.jar
 
 # CSV staging and temporary files
 data/*.tmp

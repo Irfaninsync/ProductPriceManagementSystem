@@ -40,6 +40,18 @@ public class TestRunner {
             EndToEndIntegrationTest.runAll();
             suitesPassed++;
 
+            suitesRun++;
+            CategoryServiceTest.runAll();
+            suitesPassed++;
+
+            suitesRun++;
+            SqlitePersistenceTest.runAll();
+            suitesPassed++;
+
+            suitesRun++;
+            LocalApiIntegrationTest.runAll();
+            suitesPassed++;
+
             System.out.println("================================================================================");
             System.out.println(String.format("TEST EXECUTION COMPLETED: %d of %d test suites passed (100%% Success).",
                     suitesPassed, suitesRun));
